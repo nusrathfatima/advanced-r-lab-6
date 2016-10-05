@@ -1,4 +1,27 @@
-
+#' greedy_knapsack
+#'
+#' @description greedy_knapsack search is to use the a heuristic or approximation for the problem. This algorithm will not give
+#' an exact result (but it can be shown that it will return at least 50% of the true maximum value), but it
+#' will reduce the computational complexity considerably (actually to O(n log n) due to the sorting part of
+#' the algorithm)
+#'
+#' @param x A data.frame cx with two variables v and w
+#' @param W Weight restriction for x
+#' @return it returns the maximum knapsack value and which elements. 
+#' 
+#' 
+#' @example greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+#' 
+#' 
+#' @seealso see also similar functions:
+#' \code{\link{brute_force_knapsack}}
+#' \code{\link{knapsack_dynamic}}
+#'  
+#' 
+#'
+#' @references \url{https://en.wikipedia.org/wiki/Knapsack_problem#Greedy_approximation_algorithm}
+#'
+#' @export
 
 
 greedy_knapsack <- function(x, W){
