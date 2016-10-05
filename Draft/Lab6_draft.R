@@ -35,7 +35,6 @@ brute_force_knapsack <- function(x,W){
         next
       }
     }
-    print(paste((rows/nrow(x))*100, "%"))
   }
   
   res[["value"]] <- round(best_value,digits = 0)
@@ -50,7 +49,6 @@ packBits(intToBits(knapsack_objects$v[1]), type = "integer")
 # Testing
 debugonce(brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500))
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
-brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
 
 brute_force_knapsack(x = knapsack_objects[1:1000,], W = 3500)
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
@@ -60,38 +58,86 @@ brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
 ################# 
 # Bruteforce 2
 
-brute_force_knapsack2 <- function(x,W){
+brute_force_knapsack2 <- function(x,W, parallel = FALSE){
   require(combinat, quietly = TRUE)
+  require(parallel, quietly = TRUE)
   
-  comb <- combinat::combn(rownames(x), m = 2, simplify = FALSE, fun = as.numeric)
-  
-  best_value <- 0
 
   
-  best_comb <- function(orig_data = data, comb = comb, W = W){
-    res <- list(
-      "value" = vector("numeric"),
-      "elements" = vector("numeric")
-    )
-    
-    if(sum(orig_data[comb,"v"]) > best_value & sum(orig_data[comb,"v"]) <=W){
-      assign("best_value",sum(orig_data[comb,"v"]), envir = as.environment(parent.frame()))
-      res[["value"]] <- sum(orig_data[comb,"v"])
-      res[["elements"]] <- comb
+  if(parallel){
+    if(Sys.info()["sysname"] == "Windows"){
+      stop("The parallel function can not be used in a Windows system")
     } else {
-      next
+     
+      cores = parallel::detectCores()
+      
+      comb <- unlist(parallel::mclapply(1:nrow(x), 
+                            function(i){
+                              combinat::combn(rownames(x), 
+                                              m = i, 
+                                              simplify = FALSE, 
+                                              fun = as.numeric)},
+                            mc.cores = cores),
+                     recursive = FALSE)
+      
+      values <- parallel::mclapply(comb, 
+                                   function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                                         sum(x[comb,"v"]),
+                                                         0)},
+                                   mc.cores = cores)
+       
     }
+  } else {
     
-    return(res)
+    comb <- unlist(lapply(1:nrow(x), 
+                          function(i){
+                            combinat::combn(rownames(x), 
+                                            m = i, 
+                                            simplify = FALSE, 
+                                            fun = as.numeric)}),
+                   recursive = FALSE)
+    
+    values <- lapply(comb, function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                                 sum(x[comb,"v"]),
+                                                 0)})
   }
   
-  res <- lapply(comb, best_comb,orig_data = x, comb = comb, W = W)
+
   
-  return(res)
+  return(list(
+    "value" =  values[[which.max(values)]],
+    "elements" = comb[[which.max(values)]]
+    ))
 }
 
+library(microbenchmark)
+
+microbenchmark(
+  brute_force_knapsack(x = knapsack_objects[1:50,], W = 3500),
+  brute_force_knapsack2(x = knapsack_objects[1:10,], W = 3500)
+)
 
 
+microbenchmark(
+  "normal" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500),
+  "parallel" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500, parallel = TRUE)
+)
+brute_force_knapsack2(x = knapsack_objects[1:200,], W = 3500, parallel = TRUE)
+
+brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
+
+
+test <- combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE, fun = as.numeric)
+unlist(lapply(test, function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                   sum(x[comb,"v"]), 
+                                   0)}))
+
+
+(lapply(combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE, fun = as.numeric), as.character))
+
+temp_resi <- data.frame(
+  "comb" = combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE)
+)
 ######################################
 ## Dynamic
 
@@ -120,7 +166,47 @@ knapsack_dynamic(x = knapsack_objects[1:12,], W = 3500)
 knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000)
 
 
+######################################
+## Greedy knapsack
 
+greedy_knapsack <- function(x, W){
+  if(!is.data.frame(x)){
+    stop("x must be a data.frame")
+  }
+  
+  #Creating the a fractional variable and sorting the
+  # row according to the new variable
+  x$frac <- x$v/x$w
+  x <- x[order(x$frac, decreasing = TRUE), ]
+  
+  #Creating two vectors for holding the result 
+  value <- vector("numeric")
+  elements <- vector("numeric")
+  
+  #Initilazing values
+  weight <- 0
+  value <- 0
+  
+  
+  i <- 1
+  while(weight + x[i,"w"] < W){
+    value <- value + x[i,"v"] 
+    weight <- weight + x[i,"w"]
+    elements[i] <- rownames(x[i,])
+    i <- i + 1
+  }
+  
+  res <- list(
+    "value" = value,
+    "elements" = elements
+  )
+ 
+  return(res)
+   
+}
+
+greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+greedy_knapsack(x = knapsack_objects[1:1200,], W = 2000)
 
 ## Help files
 intToBits(matrix(rep(c(0,1),9), ncol = 3))
