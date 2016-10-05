@@ -35,7 +35,6 @@ brute_force_knapsack <- function(x,W){
         next
       }
     }
-    print(paste((rows/nrow(x))*100, "%"))
   }
   
   res[["value"]] <- round(best_value,digits = 0)
@@ -50,7 +49,6 @@ packBits(intToBits(knapsack_objects$v[1]), type = "integer")
 # Testing
 debugonce(brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500))
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
-brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
 
 brute_force_knapsack(x = knapsack_objects[1:1000,], W = 3500)
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
@@ -65,33 +63,38 @@ brute_force_knapsack2 <- function(x,W){
   
   comb <- combinat::combn(rownames(x), m = 2, simplify = FALSE, fun = as.numeric)
   
-  best_value <- 0
-
+  values <- lapply(comb, function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                                sum(x[comb,"v"]),
+                                                0)})
   
-  best_comb <- function(orig_data = data, comb = comb, W = W){
-    res <- list(
-      "value" = vector("numeric"),
-      "elements" = vector("numeric")
-    )
-    
-    if(sum(orig_data[comb,"v"]) > best_value & sum(orig_data[comb,"v"]) <=W){
-      assign("best_value",sum(orig_data[comb,"v"]), envir = as.environment(parent.frame()))
-      res[["value"]] <- sum(orig_data[comb,"v"])
-      res[["elements"]] <- comb
-    } else {
-      next
-    }
-    
-    return(res)
-  }
   
-  res <- lapply(comb, best_comb,orig_data = x, comb = comb, W = W)
-  
-  return(res)
+  return(list(
+    "value" =  values[[which.max(values)]],
+    "elements" = comb[[which.max(values)]]
+    ))
 }
 
+library(microbenchmark)
+
+microbenchmark(
+  brute_force_knapsack(x = knapsack_objects[1:50,], W = 3500),
+  brute_force_knapsack2(x = knapsack_objects[1:200,], W = 3500)
+)
+
+brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
 
 
+test <- combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE, fun = as.numeric)
+unlist(lapply(test, function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                   sum(x[comb,"v"]), 
+                                   0)}))
+
+
+(lapply(combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE, fun = as.numeric), as.character))
+
+temp_resi <- data.frame(
+  "comb" = combinat::combn(rownames(knapsack_objects[1:8,]), m = 2, simplify = FALSE)
+)
 ######################################
 ## Dynamic
 
