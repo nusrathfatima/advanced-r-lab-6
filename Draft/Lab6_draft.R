@@ -122,7 +122,7 @@ microbenchmark(
   "normal" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500),
   "parallel" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500, parallel = TRUE)
 )
-brute_force_knapsack2(x = knapsack_objects[1:200,], W = 3500, parallel = TRUE)
+brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500, parallel = TRUE)
 
 brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
 
