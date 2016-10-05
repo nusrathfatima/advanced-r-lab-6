@@ -58,15 +58,51 @@ brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
 ################# 
 # Bruteforce 2
 
-brute_force_knapsack2 <- function(x,W){
+brute_force_knapsack2 <- function(x,W, parallel = FALSE){
   require(combinat, quietly = TRUE)
+  require(parallel, quietly = TRUE)
   
-  comb <- combinat::combn(rownames(x), m = 2, simplify = FALSE, fun = as.numeric)
+
   
-  values <- lapply(comb, function(comb){ifelse(sum(x[comb,"w"]) <=W,
-                                                sum(x[comb,"v"]),
-                                                0)})
+  if(parallel){
+    if(Sys.info()["sysname"] == "Windows"){
+      stop("The parallel function can not be used in a Windows system")
+    } else {
+     
+      cores = parallel::detectCores()
+      
+      comb <- unlist(parallel::mclapply(1:nrow(x), 
+                            function(i){
+                              combinat::combn(rownames(x), 
+                                              m = i, 
+                                              simplify = FALSE, 
+                                              fun = as.numeric)},
+                            mc.cores = cores),
+                     recursive = FALSE)
+      
+      values <- parallel::mclapply(comb, 
+                                   function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                                         sum(x[comb,"v"]),
+                                                         0)},
+                                   mc.cores = cores)
+       
+    }
+  } else {
+    
+    comb <- unlist(lapply(1:nrow(x), 
+                          function(i){
+                            combinat::combn(rownames(x), 
+                                            m = i, 
+                                            simplify = FALSE, 
+                                            fun = as.numeric)}),
+                   recursive = FALSE)
+    
+    values <- lapply(comb, function(comb){ifelse(sum(x[comb,"w"]) <=W,
+                                                 sum(x[comb,"v"]),
+                                                 0)})
+  }
   
+
   
   return(list(
     "value" =  values[[which.max(values)]],
@@ -78,8 +114,15 @@ library(microbenchmark)
 
 microbenchmark(
   brute_force_knapsack(x = knapsack_objects[1:50,], W = 3500),
-  brute_force_knapsack2(x = knapsack_objects[1:200,], W = 3500)
+  brute_force_knapsack2(x = knapsack_objects[1:10,], W = 3500)
 )
+
+
+microbenchmark(
+  "normal" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500),
+  "parallel" = brute_force_knapsack2(x = knapsack_objects[1:20,], W = 3500, parallel = TRUE)
+)
+brute_force_knapsack2(x = knapsack_objects[1:200,], W = 3500, parallel = TRUE)
 
 brute_force_knapsack2(x = knapsack_objects[1:8,], W = 3500)
 
