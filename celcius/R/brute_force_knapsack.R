@@ -28,6 +28,18 @@ brute_force_knapsack <- function(x,W, parallel = FALSE){
   require(combinat, quietly = TRUE)
   require(parallel, quietly = TRUE)
   
+  if(!is.data.frame(x)){
+    stop("x must be a data.frame")
+  }
+  
+  if(ncol(x) != 2){
+    stop("x should only have 2 columns, a value columns and a weight column")
+  }
+  
+  if(!all(names(x) %in% c("v","w"))){
+    stop("Names of columns in x should only be 'v' for value and 'w' for weight")
+  }
+  
   
   
   if(parallel){

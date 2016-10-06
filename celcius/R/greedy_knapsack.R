@@ -23,9 +23,19 @@
 #'
 #' @export
 greedy_knapsack <- function(x, W){
+  
   if(!is.data.frame(x)){
     stop("x must be a data.frame")
   }
+  
+  if(ncol(x) != 2){
+    stop("x should only have 2 columns, a value columns and a weight column")
+  }
+  
+  if(!all(names(x) %in% c("v","w"))){
+    stop("Names of columns in x should only be 'v' for value and 'w' for weight")
+  }
+  
   
   #Creating the a fractional variable and sorting the
   # row according to the new variable
