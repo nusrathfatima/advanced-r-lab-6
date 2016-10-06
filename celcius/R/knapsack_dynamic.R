@@ -1,4 +1,4 @@
-#' knapsack_dynamic
+#' @ Dynamic knapsack
 #'
 #' @description If the weights are actually discrete values, knapsack_dynamic search is
 #'  used to solve the knapsack problem but scaling much better
