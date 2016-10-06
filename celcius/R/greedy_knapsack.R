@@ -35,7 +35,9 @@ greedy_knapsack <- function(x, W){
   if(!all(names(x) %in% c("v","w"))){
     stop("Names of columns in x should only be 'v' for value and 'w' for weight")
   }
-  
+  if(length(W) !=1 & class(W)!= "numeric"){
+    stop("W must be numeric with length 1 ")
+  }
   
   #Creating the a fractional variable and sorting the
   # row according to the new variable

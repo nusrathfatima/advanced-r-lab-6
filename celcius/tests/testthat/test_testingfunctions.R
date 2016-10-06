@@ -23,10 +23,14 @@ test_that("Brute_force_knapsack", {
   expect_that(brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000),
               equals(list(value = 16922, elements = c(8,9))))
   
+  expect_that(brute_force_knapsack(x = list(v = C(1,2), l=c(2,3), W = 2000),
+              throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
+  
   expect_that(brute_force_knapsack(x = c(1:3), W = 2000),
-              throws_error("Data must be a data.frame"))
-  expect_that(brute_force_knapsack(x = c(1:3), W = 2000:2001),
-              throws_error("W must be of length 1"))
+              throws_error("x must be a data.frame"))
+  
+  expect_that(brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000:2001),
+              throws_error("W must be numeric with length 1 "))
   
   expect_that(colnames(knapsack_objects[1:8,])[1],
               equals("w"))
@@ -43,11 +47,15 @@ test_that("greedy_knapsack", {
   
   expect_that(greedy_knapsack(x = knapsack_objects[1:12,], W = 2000),
               equals(list(value = 16922, elements = c(8,9))))
+  expect_that(greedy_knapsack(x = list(v = C(1,2), l=c(2,3), W = 2000),
+                                   throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
+  
   
   expect_that(greedy_knapsack(x = c(1:3), W = 2000),
-              throws_error("Data must be a data.frame"))
-  expect_that(greedy_knapsack(x = c(1:3), W = 2000:2001),
-              throws_error("W must be of length 1"))
+              throws_error("x must be a data.frame"))
+  
+  expect_that(greedy_knapsack(x = knapsack_objects[1:12,], W = 2000:2001),
+              throws_error("W must be numeric with length 1 "))
   
   expect_that(colnames(knapsack_objects[1:8,])[1],
               equals("w"))
@@ -73,11 +81,14 @@ test_that("knapsack_dynamic", {
   
   expect_that(knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000),
               equals(list(value = 16922, elements = c(8,9))))
+  expect_that(knapsack_dynamic(x = list(v = C(1,2), l=c(2,3), W = 2000),
+                              throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
+  
   
   expect_that(knapsack_dynamic(x = c(1:3), W = 2000),
-              throws_error("Data must be a data.frame"))
-  expect_that(knapsack_dynamic(x = c(1:3), W = 2000:2001),
-              throws_error("W must be of length 1"))
+              throws_error("x must be a data.frame"))
+  expect_that(knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000:2001),
+              throws_error("W must be numeric with length 1 "))
   
   expect_that(colnames(knapsack_objects[1:8,])[1],
               equals("w"))
