@@ -1,12 +1,12 @@
-#' @ Dynamic knapsack
+#' @title Dynamic knapsack
 #'
-#' @description If the weights are actually discrete values, knapsack_dynamic search is
-#'  used to solve the knapsack problem but scaling much better
-#' over all possible values of w.
+#' @description A function that solve the knapsack problem using dynamic programming. If the weights 
+#' are actually discrete values, knapsack_dynamic search is used to solve the knapsack problem but 
+#' scaling much better over all possible values of w.
 #'
 #' @param x A data.frame cx with two variables v and w
-#' @param W Weight restriction for x
-#' @return it returns the maximum knapsack value and which elements. 
+#' @param W The weight capacity of the knapsack
+#' @return The maximum knapsack value and corresponding elements that contributes to the value. 
 #' 
 #' @examples knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 #' @examples knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
