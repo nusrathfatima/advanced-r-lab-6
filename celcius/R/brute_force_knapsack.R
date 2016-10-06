@@ -73,7 +73,7 @@ brute_force_knapsack <- function(x,W, parallel = FALSE){
   
   
   return(list(
-    "value" =  values[[which.max(values)]],
+    "value" =  round(values[[which.max(values)]],digits = 0),
     "elements" = comb[[which.max(values)]]
   ))
 }

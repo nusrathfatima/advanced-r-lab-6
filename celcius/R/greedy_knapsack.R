@@ -52,7 +52,7 @@ greedy_knapsack <- function(x, W){
   }
   
   res <- list(
-    "value" = value,
+    "value" = round(value,digits = 0),
     "elements" = elements
   )
   

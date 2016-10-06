@@ -29,10 +29,10 @@
 
 knapsack_dynamic <- function(x, W){
   
-  m <- matrix(0,ncol = W, nrow = nrow(x))
+  m <- matrix(0,ncol = (W), nrow = (nrow(x)))
   
   for(i in 2:(nrow(x))){
-    for(j in 1:W){
+    for(j in 1:(W )){
       if(x[i,"w"] > j){
         m[i,j] <- m[i-1,j]
       } else {
@@ -41,8 +41,35 @@ knapsack_dynamic <- function(x, W){
     }
   }
   
+  
   res <- list(
-    "value" = m[nrow(x),W]
+    "value" = round(m[(nrow(x) ),(W )], digits = 0),
+    "elements" = vector("numeric")
   )
+  
+  elements <- vector("numeric")
+  
+  m <- rbind(rep(0, W), m)
+  x <- rbind(rep(0, ncol(x)),x)
+  
+  i <- nrow(m)
+  k <- W
+  
+ 
+  while(i > 1 && k > 0 ){
+    if(m[i,k] != m[(i-1),k]){
+      elements <- cbind(elements, (i-1))
+      k <- k - x[i,"w"]
+      i <- i - 1
+    } else {
+      i <- i - 1
+    }
+  }
+  
+  names(elements) <- NULL
+  
+  res[["elements"]] <- as.vector(sort(elements))
+
+
   return(res)
 }
