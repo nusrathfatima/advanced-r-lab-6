@@ -1,16 +1,16 @@
 #' Brute_force_knapsack
 #'
 #' @description Brute-force search (i.e. going through all possible alternatives and return the maximum value
-#' found) knapsack is an algorythm approach of complexity O(2n) since all possible combinations 2n needs to be evaluated.
+#' found) knapsack is an algorithm approach of complexity O(2n) since all possible combinations 2n needs to be evaluated.
 #'
 #' @param x A data.frame cx with two variables v and w
 #' @param W Weight restriction for x
 #' @return it returns the maximum knapsack value and which elements. 
 #' 
-#' @example brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
-#' @example brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
-#' @example brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
-#' @example brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
+#' @examples brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+#' @examples brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
+#' @examples brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)
+#' @examples brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
 #' 
 #' 
 #' 
@@ -24,8 +24,6 @@
 #' @references \url{https://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem}
 #'
 #' @export
-data(knapsack_objects)
-
 brute_force_knapsack <- function(x,W, parallel = FALSE){
   require(combinat, quietly = TRUE)
   require(parallel, quietly = TRUE)

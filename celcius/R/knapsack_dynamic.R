@@ -9,10 +9,10 @@
 #' @return it returns the maximum knapsack value and which elements. 
 #' 
 #' 
-#' @example knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
-#' @example knapsack_dynamic(x = knapsack_objects[1:12,], W = 3500)
-#' @example knapsack_dynamic(x = knapsack_objects[1:8,], W = 2000)
-#' @example knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000)
+#' @examples knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
+#' @examples knapsack_dynamic(x = knapsack_objects[1:12,], W = 3500)
+#' @examples knapsack_dynamic(x = knapsack_objects[1:8,], W = 2000)
+#' @examples knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000)
 #' 
 #' 
 #' @seealso see also similar functions:
