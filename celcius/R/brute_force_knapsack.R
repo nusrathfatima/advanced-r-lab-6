@@ -39,7 +39,8 @@ brute_force_knapsack <- function(x,W, parallel = FALSE){
   if(!all(names(x) %in% c("v","w"))){
     stop("Names of columns in x should only be 'v' for value and 'w' for weight")
   }
-  if(length(W) !=1 & class(W)!= "numeric"){
+  
+  if(length(W) >1 | !is.numeric(W)){
     stop("W must be numeric with length 1 ")
   }
   
