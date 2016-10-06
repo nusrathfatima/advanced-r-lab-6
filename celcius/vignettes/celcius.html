@@ -127,30 +127,6 @@ knapsack_objects &lt;-<span class="st"> </span><span class="kw">knapsack_data_ge
 ## 
 ## $elements
 ## [1] &quot;8&quot; &quot;3&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbenchmark)
-
-knapsack_object_brute &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">16</span>)
-knapsack_object_dynamic &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">500</span>)
-knapsack_object_greedy &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">1000000</span>)
-
-<span class="kw">microbenchmark</span>(
-  <span class="st">&quot;Brute Normal&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>),
-  <span class="st">&quot;Brute Parallel&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>, <span class="dt">parallel =</span> <span class="ot">TRUE</span>),
-  <span class="st">&quot;Dynamic&quot;</span> =<span class="st"> </span><span class="kw">knapsack_dynamic</span>(<span class="dt">x =</span> knapsack_object_dynamic, <span class="dt">W =</span> <span class="dv">3500</span>),
-  <span class="st">&quot;Greedy&quot;</span> =<span class="st"> </span><span class="kw">greedy_knapsack</span>(<span class="dt">x =</span> knapsack_object_greedy, <span class="dt">W =</span> <span class="dv">3500</span>),
-  <span class="dt">times =</span> <span class="dv">1</span>
-)</code></pre></div>
-<pre><code>## Unit: milliseconds
-##            expr        min         lq       mean     median         uq
-##    Brute Normal  1646.9835  1646.9835  1646.9835  1646.9835  1646.9835
-##  Brute Parallel  1057.5358  1057.5358  1057.5358  1057.5358  1057.5358
-##         Dynamic 50330.5795 50330.5795 50330.5795 50330.5795 50330.5795
-##          Greedy   976.9691   976.9691   976.9691   976.9691   976.9691
-##         max neval
-##   1646.9835     1
-##   1057.5358     1
-##  50330.5795     1
-##    976.9691     1</code></pre>
 </div>
 </div>
 

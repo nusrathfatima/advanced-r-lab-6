@@ -20,7 +20,7 @@ If the weights are actually discrete values, knapsack_dynamic search is
 over all possible values of w.
 }
 \examples{
-knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
+knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem}

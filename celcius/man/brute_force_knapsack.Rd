@@ -10,6 +10,8 @@ brute_force_knapsack(x, W, parallel = FALSE)
 \item{x}{A data.frame cx with two variables v and w}
 
 \item{W}{Weight restriction for x}
+
+\item{parallel}{If true, the function will use multple cores. Works only on Mac/Linux system.}
 }
 \value{
 it returns the maximum knapsack value and which elements.
@@ -19,7 +21,7 @@ Brute-force search (i.e. going through all possible alternatives and return the 
 found) knapsack is an algorithm approach of complexity O(2n) since all possible combinations 2n needs to be evaluated.
 }
 \examples{
-brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Knapsack_problem#0.2F1_knapsack_problem}

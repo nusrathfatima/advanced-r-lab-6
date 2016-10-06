@@ -8,7 +8,7 @@
 #' @param W Weight restriction for x
 #' @return it returns the maximum knapsack value and which elements. 
 #' 
-#' 
+#' @examples knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 #' @examples knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
 #' @examples knapsack_dynamic(x = knapsack_objects[1:12,], W = 3500)
 #' @examples knapsack_dynamic(x = knapsack_objects[1:8,], W = 2000)

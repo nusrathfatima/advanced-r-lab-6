@@ -9,7 +9,7 @@
 #' @param W Weight restriction for x
 #' @return it returns the maximum knapsack value and which elements. 
 #' 
-#' 
+#' @examples knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 #' @examples greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
 #' 
 #' 

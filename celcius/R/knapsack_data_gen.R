@@ -1,6 +1,13 @@
 #' @title Knapsack data generator
 #' 
-#' @description A data generator
+#' @description A data generator for creating knapsack elements
+#' 
+#' @param n number of observation to be created
+#' @param seed The random generator seed
+#' 
+#' @return A data frame with two columns, 'v' for value and 'w' for weight.  
+#' 
+#' 
 #' 
 #' @export
 knapsack_data_gen <- function(n = 2000, seed = 42){

@@ -5,8 +5,10 @@
 #'
 #' @param x A data.frame cx with two variables v and w
 #' @param W Weight restriction for x
+#' @param parallel If true, the function will use multple cores. Works only on Mac/Linux system.
 #' @return it returns the maximum knapsack value and which elements. 
 #' 
+#' @examples knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 #' @examples brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
 #' @examples brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500)
 #' @examples brute_force_knapsack(x = knapsack_objects[1:8,], W = 2000)

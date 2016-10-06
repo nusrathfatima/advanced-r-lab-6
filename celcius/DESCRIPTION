@@ -13,8 +13,6 @@ Imports:
 Suggests:
     microbenchmark,
     testthat,
-    combinat,
-    parallel,
     knitr,
     rmarkdown
 RoxygenNote: 5.0.1

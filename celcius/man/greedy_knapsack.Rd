@@ -21,9 +21,7 @@ will reduce the computational complexity considerably (actually to O(n log n) du
 the algorithm)
 }
 \examples{
-greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
-
-
+knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)
 }
 \references{
 \url{https://en.wikipedia.org/wiki/Knapsack_problem#Greedy_approximation_algorithm}
