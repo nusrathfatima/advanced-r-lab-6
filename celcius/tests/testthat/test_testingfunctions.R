@@ -18,13 +18,14 @@ context("knapsack")
 test_that("Brute_force_knapsack", {
 
   expect_that(brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500),
-              equals(list(value = 121186, elements = c(6,8))))
+              equals(list(value = 16770, elements = c(5,8))))
   
   expect_that(brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000),
-              equals(list(value = 16922, elements = c(8,9))))
+              equals(list(value = 15428, elements = c(3,8))))
   
-  expect_that(brute_force_knapsack(x = list(v = C(1,2), l=c(2,3), W = 2000),
-              throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
+  expect_that(brute_force_knapsack(x = data.frame("v" = 1:30,
+                                                  "z" = 30:1), W = 2000),
+              throws_error("Names of columns in x should only be 'v' for value and 'w' for weight"))
   
   expect_that(brute_force_knapsack(x = c(1:3), W = 2000),
               throws_error("x must be a data.frame"))
@@ -43,11 +44,11 @@ test_that("Brute_force_knapsack", {
 test_that("greedy_knapsack", {
   
   expect_that(greedy_knapsack(x = knapsack_objects[1:8,], W = 3500),
-              equals(list(value = 121186, elements = c(6,8))))
+              equals(list(value = 16770, elements = c(5,8))))
   
   expect_that(greedy_knapsack(x = knapsack_objects[1:12,], W = 2000),
-              equals(list(value = 16922, elements = c(8,9))))
-  expect_that(greedy_knapsack(x = list(v = C(1,2), l=c(2,3), W = 2000),
+              equals(list(value = 15428, elements = c(3,8))))
+  expect_that(greedy_knapsack(x = list("v" = c(1,2), "l"=c(2,3), W = 2000),
                                    throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
   
   
@@ -69,7 +70,7 @@ test_that("greedy_knapsack", {
 
 test_that("knapsack_dynamic", {
   
-  expect_that(knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500),
+  expect_that(knapsack_dynamic(x = knapsack_objects[1:800,], W = 3500),
               equals(list(value= 192647, 
                           elements= c(92, 574, 472, 80, 110, 537, 332, 117, 37, 
                                       776, 577, 288, 234, 255, 500, 794, 55,
@@ -80,8 +81,8 @@ test_that("knapsack_dynamic", {
               )
   
   expect_that(knapsack_dynamic(x = knapsack_objects[1:12,], W = 2000),
-              equals(list(value = 16922, elements = c(8,9))))
-  expect_that(knapsack_dynamic(x = list(v = C(1,2), l=c(2,3), W = 2000),
+              equals(list(value = 15428, elements = c(3,8))))
+  expect_that(knapsack_dynamic(x = list("v" = c(1,2), "l"=c(2,3), W = 2000),
                               throws_error("Names of columns in x should only be 'v' for value and 'w' for weight")))
   
   
