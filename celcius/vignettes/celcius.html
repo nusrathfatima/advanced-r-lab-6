@@ -100,9 +100,8 @@ knapsack_objects &lt;-<span class="st"> </span><span class="kw">knapsack_data_ge
 </div>
 <div id="brute_force_knapsack" class="section level3">
 <h3>brute_force_knapsack</h3>
-<p>brute_force_knapsack implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(celcius)
-<span class="kw">brute_force_knapsack</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
+<p><span class="math inline">\(brute_force_knapsack\)</span> implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">brute_force_knapsack</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
 <pre><code>## $value
 ## [1] 16770
 ## 
@@ -112,8 +111,7 @@ knapsack_objects &lt;-<span class="st"> </span><span class="kw">knapsack_data_ge
 <div id="knapsack_dynamic" class="section level3">
 <h3>knapsack_dynamic</h3>
 <p>This function should return the same results as the brute force algorithm, but unlike the brute force it should scale much better since the algorithm will run in O(Wn)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(celcius)
-<span class="kw">knapsack_dynamic</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">knapsack_dynamic</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
 <pre><code>## $value
 ## [1] 16770
 ## 
@@ -123,13 +121,36 @@ knapsack_objects &lt;-<span class="st"> </span><span class="kw">knapsack_data_ge
 <div id="greedy_knapsack" class="section level3">
 <h3>greedy_knapsack</h3>
 <p>This algorithm will not give an exact result (but it can be shown that it will return at least 50% of the true maximum value), but it will reduce the computational complexity considerably to O(n log n)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(celcius)
-<span class="kw">greedy_knapsack</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">greedy_knapsack</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
 <pre><code>## $value
 ## [1] 15428
 ## 
 ## $elements
 ## [1] &quot;8&quot; &quot;3&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbenchmark)
+
+knapsack_object_brute &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">16</span>)
+knapsack_object_dynamic &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">500</span>)
+knapsack_object_greedy &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">1000000</span>)
+
+<span class="kw">microbenchmark</span>(
+  <span class="st">&quot;Brute Normal&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="st">&quot;Brute Parallel&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>, <span class="dt">parallel =</span> <span class="ot">TRUE</span>),
+  <span class="st">&quot;Dynamic&quot;</span> =<span class="st"> </span><span class="kw">knapsack_dynamic</span>(<span class="dt">x =</span> knapsack_object_dynamic, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="st">&quot;Greedy&quot;</span> =<span class="st"> </span><span class="kw">greedy_knapsack</span>(<span class="dt">x =</span> knapsack_object_greedy, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="dt">times =</span> <span class="dv">1</span>
+)</code></pre></div>
+<pre><code>## Unit: milliseconds
+##            expr        min         lq       mean     median         uq
+##    Brute Normal  1646.9835  1646.9835  1646.9835  1646.9835  1646.9835
+##  Brute Parallel  1057.5358  1057.5358  1057.5358  1057.5358  1057.5358
+##         Dynamic 50330.5795 50330.5795 50330.5795 50330.5795 50330.5795
+##          Greedy   976.9691   976.9691   976.9691   976.9691   976.9691
+##         max neval
+##   1646.9835     1
+##   1057.5358     1
+##  50330.5795     1
+##    976.9691     1</code></pre>
 </div>
 </div>
 
