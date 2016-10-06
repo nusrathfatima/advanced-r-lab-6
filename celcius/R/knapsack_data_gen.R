@@ -9,9 +9,9 @@
 #' 
 #' @export
 knapsack_data_gen <- function(n = 2000, seed = 42){
+  suppressMessages(require(stats, quietly = TRUE))
   set.seed(seed)
-  data <-   data.frame(w=sample(1:4000, size = n, replace = TRUE),
-    v=runif(n = n, 0, 10000)
-  )
+  data <- data.frame(w = sample(1:4000, size = n, replace = TRUE),
+                     v = stats::runif(n = n, 0, 10000))
   return(data)
 }

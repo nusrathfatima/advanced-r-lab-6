@@ -4,7 +4,7 @@
 #' is to use the a heuristic or approximation for the problem. This algorithm will not give an exact result 
 #' (but it can be shown that it will return at least 50% of the true maximum value), but it
 #' will reduce the computational complexity considerably (actually to O(n log n) due to the sorting part of
-#' the algorithm)
+#' the algorithm).
 #'
 #' @param x A data.frame cx with two variables v and w
 #' @param W The weight capacity of the knapsack

@@ -7,7 +7,7 @@
 knapsack_data_gen(n = 2000, seed = 42)
 }
 \arguments{
-\item{n}{number of observation to be created}
+\item{n}{Number of observation to be created}
 
 \item{seed}{The random generator seed}
 }
@@ -15,6 +15,6 @@ knapsack_data_gen(n = 2000, seed = 42)
 A data frame with two columns, 'v' for value and 'w' for weight.
 }
 \description{
-A data generator for creating knapsack elements
+A data generator for creating knapsack elements with random values and weights.
 }
 

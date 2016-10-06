@@ -2,23 +2,23 @@
 % Please edit documentation in R/brute_force_knapsack.R
 \name{brute_force_knapsack}
 \alias{brute_force_knapsack}
-\title{Brute_force_knapsack}
+\title{Brute force knapsack}
 \usage{
 brute_force_knapsack(x, W, parallel = FALSE)
 }
 \arguments{
 \item{x}{A data.frame cx with two variables v and w}
 
-\item{W}{Weight restriction for x}
+\item{W}{The weight capacity of the knapsack}
 
-\item{parallel}{If true, the function will use multple cores. Works only on Mac/Linux system.}
+\item{parallel}{If true, the function will use multiple cores. Works only on Mac/Linux system.}
 }
 \value{
-it returns the maximum knapsack value and which elements.
+The maximum knapsack value and corresponding elements that contributes to the value.
 }
 \description{
-Brute-force search (i.e. going through all possible alternatives and return the maximum value
-found) knapsack is an algorithm approach of complexity O(2n) since all possible combinations 2n needs to be evaluated.
+A function that solve the knapsack problem through brute force. Brute-force search 
+is an algorithm approach of complexity O(2n) since all possible combinations 2n needs to be evaluated.
 }
 \examples{
 knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)

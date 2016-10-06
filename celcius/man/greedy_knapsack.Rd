@@ -9,16 +9,17 @@ greedy_knapsack(x, W)
 \arguments{
 \item{x}{A data.frame cx with two variables v and w}
 
-\item{W}{Weight restriction for x}
+\item{W}{The weight capacity of the knapsack}
 }
 \value{
-it returns the maximum knapsack value and which elements.
+The maximum knapsack value and corresponding elements that contributes to the value.
 }
 \description{
-greedy_knapsack search is to use the a heuristic or approximation for the problem. This algorithm will not give
-an exact result (but it can be shown that it will return at least 50% of the true maximum value), but it
+A function that solve the knapsack problem using a 'greedy' approach. The greedy_knapsack search 
+is to use the a heuristic or approximation for the problem. This algorithm will not give an exact result 
+(but it can be shown that it will return at least 50% of the true maximum value), but it
 will reduce the computational complexity considerably (actually to O(n log n) due to the sorting part of
-the algorithm)
+the algorithm).
 }
 \examples{
 knapsack_objects <- knapsack_data_gen(n = 2000, seed = 42)

@@ -8,21 +8,11 @@
 \description{
 \packageDescription{celcius}
 }
-\details{
-
-The DESCRIPTION file:
-\packageDESCRIPTION{celcius}
-\packageIndices{celcius}
-}
 \author{
 \packageAuthor{celcius}
 
-Maintainer: \packageMaintainer{celcius}
+\packageMaintainer{celcius}
 }
-\references{
-}
-\keyword{ package }
-\seealso{
-}
-\examples{
-}
+
+\keyword{package, knapsack}
+

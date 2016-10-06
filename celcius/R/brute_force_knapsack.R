@@ -27,8 +27,8 @@
 #'
 #' @export
 brute_force_knapsack <- function(x,W, parallel = FALSE){
-  require(combinat, quietly = TRUE)
-  require(parallel, quietly = TRUE)
+  suppressMessages(require(combinat, quietly = TRUE))
+  suppressMessages(require(parallel, quietly = TRUE))
   
   if(!is.data.frame(x)){
     stop("x must be a data.frame")
