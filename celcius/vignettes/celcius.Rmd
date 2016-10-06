@@ -32,10 +32,9 @@ head(knapsack_objects, n = 5)
 
 ### brute_force_knapsack
 
-brute_force_knapsack implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:
+$brute_force_knapsack$ implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:
 
 ```{r, warning= FALSE, message= FALSE}
-library(celcius)
 brute_force_knapsack(knapsack_objects[1:8,], W = 3500)
 ```
 
@@ -44,7 +43,6 @@ brute_force_knapsack(knapsack_objects[1:8,], W = 3500)
 This function should return the same results as the brute force algorithm, but unlike the brute force it should scale much better since the algorithm will run in O(Wn)
 
 ```{r}
-library(celcius)
 knapsack_dynamic(knapsack_objects[1:8,], W = 3500)
 ```
 
@@ -52,9 +50,25 @@ knapsack_dynamic(knapsack_objects[1:8,], W = 3500)
 This algorithm will not give an exact result (but it can be shown that it will return at least 50% of the true maximum value), but it will reduce the computational complexity considerably to O(n log n) 
 
 ```{r}
-library(celcius)
 greedy_knapsack(knapsack_objects[1:8,], W = 3500)
 ```
 
+
+
+```{r, warning= FALSE, error= FALSE}
+library(microbenchmark)
+
+knapsack_object_brute <- knapsack_data_gen(n = 16)
+knapsack_object_dynamic <- knapsack_data_gen(n = 500)
+knapsack_object_greedy <- knapsack_data_gen(n = 1000000)
+
+microbenchmark(
+  "Brute Normal" = brute_force_knapsack(x = knapsack_object_brute, W = 3500),
+  "Brute Parallel" = brute_force_knapsack(x = knapsack_object_brute, W = 3500, parallel = TRUE),
+  "Dynamic" = knapsack_dynamic(x = knapsack_object_dynamic, W = 3500),
+  "Greedy" = greedy_knapsack(x = knapsack_object_greedy, W = 3500),
+  times = 1
+)
+```
 
 
