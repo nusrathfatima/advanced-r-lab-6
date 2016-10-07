@@ -9,15 +9,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+************************************************
+
 ##Introduction
 
-The celcius package implements methods for solving the knapsack problem with the application of several brute force functions: 
+The celcius package include functions for solving the knapsack problem through different of types of programming approaches. The included approaches/functions are: 
 
 - brute_force_knapsack
 - knapsack_dynamic
 - greedy_knapsack
 
-To use both functions, it is **required to have the packages parallel and combinat installed**
+To use the functions, following packages are required: **parallel, stats and combinat**
+
+
+************************************************
 
 ## Function usage
 
