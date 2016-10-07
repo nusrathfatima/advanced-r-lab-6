@@ -12,7 +12,7 @@
 
 <meta name="author" content="Arian Barakat, Rebin Hosini, Carles Sans" />
 
-<meta name="date" content="2016-10-06" />
+<meta name="date" content="2016-10-07" />
 
 <title>celcius</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">celcius</h1>
 <h4 class="author"><em>Arian Barakat, Rebin Hosini, Carles Sans</em></h4>
-<h4 class="date"><em>2016-10-06</em></h4>
+<h4 class="date"><em>2016-10-07</em></h4>
 
 
 
@@ -121,12 +121,28 @@ knapsack_objects &lt;-<span class="st"> </span><span class="kw">knapsack_data_ge
 <div id="greedy_knapsack" class="section level3">
 <h3>greedy_knapsack</h3>
 <p>This algorithm will not give an exact result (but it can be shown that it will return at least 50% of the true maximum value), but it will reduce the computational complexity considerably to O(n log n)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">greedy_knapsack</span>(knapsack_objects[<span class="dv">1</span>:<span class="dv">8</span>,], <span class="dt">W =</span> <span class="dv">3500</span>)</code></pre></div>
-<pre><code>## $value
-## [1] 15428
-## 
-## $elements
-## [1] &quot;8&quot; &quot;3&quot;</code></pre>
+</div>
+<div id="benchmarking" class="section level3">
+<h3>Benchmarking</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(microbenchmark)
+
+knapsack_object_brute &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">16</span>)
+knapsack_object_dynamic &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">500</span>)
+knapsack_object_greedy &lt;-<span class="st"> </span><span class="kw">knapsack_data_gen</span>(<span class="dt">n =</span> <span class="dv">1000000</span>)
+
+<span class="kw">microbenchmark</span>(
+  <span class="st">&quot;Brute Normal&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="st">&quot;Brute Parallel&quot;</span> =<span class="st"> </span><span class="kw">brute_force_knapsack</span>(<span class="dt">x =</span> knapsack_object_brute, <span class="dt">W =</span> <span class="dv">3500</span>, <span class="dt">parallel =</span> <span class="ot">TRUE</span>),
+  <span class="st">&quot;Dynamic&quot;</span> =<span class="st"> </span><span class="kw">knapsack_dynamic</span>(<span class="dt">x =</span> knapsack_object_dynamic, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="st">&quot;Greedy&quot;</span> =<span class="st"> </span><span class="kw">greedy_knapsack</span>(<span class="dt">x =</span> knapsack_object_greedy, <span class="dt">W =</span> <span class="dv">3500</span>),
+  <span class="dt">times =</span> <span class="dv">1</span>
+)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Unit:<span class="st"> </span>seconds
+           expr       min        lq      mean    median        uq       max neval
+   Brute Normal  <span class="fl">2.718805</span>  <span class="fl">2.718805</span>  <span class="fl">2.718805</span>  <span class="fl">2.718805</span>  <span class="fl">2.718805</span>  <span class="fl">2.718805</span>     <span class="dv">1</span>
+ Brute Parallel  <span class="fl">1.693102</span>  <span class="fl">1.693102</span>  <span class="fl">1.693102</span>  <span class="fl">1.693102</span>  <span class="fl">1.693102</span>  <span class="fl">1.693102</span>     <span class="dv">1</span>
+        Dynamic <span class="fl">82.915175</span> <span class="fl">82.915175</span> <span class="fl">82.915175</span> <span class="fl">82.915175</span> <span class="fl">82.915175</span> <span class="fl">82.915175</span>     <span class="dv">1</span>
+         Greedy  <span class="fl">1.109075</span>  <span class="fl">1.109075</span>  <span class="fl">1.109075</span>  <span class="fl">1.109075</span>  <span class="fl">1.109075</span>  <span class="fl">1.109075</span>     <span class="dv">1</span></code></pre></div>
 </div>
 </div>
 

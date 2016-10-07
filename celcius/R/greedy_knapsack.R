@@ -40,6 +40,10 @@ greedy_knapsack <- function(x, W){
     stop("W must be numeric with length 1 ")
   }
   
+  if(any(x[,c("w","v")] < 0)){
+    stop("Data.frame contains non-positive values")
+  }
+  
   #Creating the a fractional variable and sorting the
   # row according to the new variable
   x$frac <- x$v/x$w

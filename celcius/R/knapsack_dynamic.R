@@ -46,6 +46,10 @@ knapsack_dynamic <- function(x, W){
     stop("W must be numeric with length 1 ")
   }
   
+  if(any(x[,c("w","v")] < 0)){
+    stop("Data.frame contains non-positive values")
+  }
+  
   m <- matrix(0,ncol = (W), nrow = (nrow(x)))
   
   for(i in 2:(nrow(x))){

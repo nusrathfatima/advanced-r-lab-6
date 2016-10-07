@@ -15,8 +15,6 @@
 #' @examples brute_force_knapsack(x = knapsack_objects[1:12,], W = 2000)
 #' 
 #' 
-#' 
-#' 
 #' @seealso see also similar functions:
 #' \code{\link{greedy_knapsack}}
 #' \code{\link{knapsack_dynamic}}
@@ -44,6 +42,10 @@ brute_force_knapsack <- function(x,W, parallel = FALSE){
   
   if(length(W) >1 | !is.numeric(W)){
     stop("W must be numeric with length 1 ")
+  }
+  
+  if(any(x[,c("w","v")] < 0)){
+    stop("Data.frame contains non-positive values")
   }
   
   
