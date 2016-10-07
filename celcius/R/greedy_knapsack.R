@@ -60,10 +60,11 @@ greedy_knapsack <- function(x, W){
   
   i <- 1
   while(weight + x[i,"w"] < W){
-    value <- value + x[i,"v"] 
-    weight <- weight + x[i,"w"]
-    elements[i] <- rownames(x[i,])
-    i <- i + 1
+      value <- value + x[i,"v"] 
+      weight <- weight + x[i,"w"]
+      elements[i] <- as.numeric(rownames(x[i,]))
+      i <- i + 1
+
   }
   
   res <- list(
