@@ -37,7 +37,7 @@ head(knapsack_objects, n = 5)
 
 ### brute_force_knapsack
 
-$brute_force_knapsack$ implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:
+brute_force_knapsack implements a function where you call knapsack brute force(x, W) that takes a data.frame cx with two variables v and w and returns the maximum knapsack value and which elements (rows in the data.frame). The variable W is the knapsack size:
 
 ```{r, warning= FALSE, message= FALSE}
 brute_force_knapsack(knapsack_objects[1:8,], W = 3500)
